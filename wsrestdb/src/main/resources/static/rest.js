@@ -1,8 +1,10 @@
-async function asyncLerFilmes(proxsucesso, proxerro) {
-    const URL = `/api/filmes`;
+async function asyncLerImoveis(proxSucesso, proxErro) {
+    const URL = `/api/imoveis`;
     fetch(URL)
-      .then(resposta => { if (!resposta.ok) throw Error(resposta.status); return resposta;}) 
-      .then(resposta => resposta.json())
-      .then(jsonresponse => proxsucesso(jsonresponse))
-      .catch(proxerro);
+        .then(resposta => {
+            if (!resposta.ok) throw new Error(resposta.status);
+            return resposta.json();
+        })
+        .then(jsonResponse => proxSucesso(jsonResponse))
+        .catch(proxErro);
 }

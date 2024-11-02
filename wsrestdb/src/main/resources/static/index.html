@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <title>Imóveis</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
+</head>
+<body>
+    <h1>Gerenciamento de Imóveis</h1>
+    <p style="font-weight:bold" id="paragrafoMensagem"></p>
+
+    <table id="tabelaImoveis">  
+        <tr>
+            <td><input type="button" value="Novo" onclick="novoImovel()" id="btnNovo"></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <th>ID</th>
+            <th>Endereço</th>
+            <th>Preço</th>
+        </tr>
+        <tbody id="corpoTabelaImoveis"></tbody>
+    </table>
+
+    <script src="rest.js"></script>
+    <script>
+        const tabelaImoveis = document.querySelector('#tabelaImoveis');
+        const corpoTabela = document.querySelector('#corpoTabelaImoveis');
+        const paragrafoMensagem = document.querySelector('#paragrafoMensagem');
+
+        inicializar();
+
+        function inicializar() {
+            paragrafoMensagem.textContent = 'Listagem de todos os imóveis';
+            tabelaImoveis.style.display = 'inline';
+            listarTodosImoveis();            
+        }
+
+        function listarTodosImoveis() {
+            const errorHandler = (error) => { 
+                paragrafoMensagem.textContent = "Erro ao listar imóveis (código " + error.message + ")";
+            };
+            asyncLerImoveis(preencherTabela, errorHandler);
+        }
+
+        function preencherTabela(imoveis) {
+            corpoTabela.innerHTML = "";
+            imoveis.forEach((imovel) => {
+                const linha = corpoTabela.insertRow();
+                const celulaId = linha.insertCell();
+                const celulaEndereco = linha.insertCell();
+                const celulaPreco = linha.insertCell();
+
+                celulaId.textContent = imovel.id;
+                celulaEndereco.textContent = imovel.endereco;
+                celulaPreco.textContent = imovel.preco;
+            });
+        }
+
+        function asyncLerImoveis(proxSucesso, proxErro) {
+            const URL = '/api/imoveis';
+            fetch(URL)
+                .then(resposta => {
+                    if (!resposta.ok) throw new Error(resposta.status);
+                    return resposta.json();
+                })
+                .then(jsonResponse => proxSucesso(jsonResponse))
+                .catch(proxErro);
+        }
+    </script>
+</body>
+</html>
