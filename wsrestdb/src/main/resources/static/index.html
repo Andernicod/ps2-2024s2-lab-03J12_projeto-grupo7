@@ -1,73 +1,89 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <title>Imóveis</title>
+    <title>Imóveis - Login e Registro</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
 </head>
 <body>
     <h1>Gerenciamento de Imóveis</h1>
-    <p style="font-weight:bold" id="paragrafoMensagem"></p>
+    
+    <h2>Login</h2>
+    <p id="mensagemLogin" style="color: red;"></p>
+    <form id="formLogin">
+        <input type="text" id="usernameLogin" placeholder="Usuário" required>
+        <input type="password" id="passwordLogin" placeholder="Senha" required>
+        <input type="submit" value="Login">
+    </form>
 
-    <table id="tabelaImoveis">  
-        <tr>
-            <td><input type="button" value="Novo" onclick="novoImovel()" id="btnNovo"></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <th>ID</th>
-            <th>Endereço</th>
-            <th>Preço</th>
-        </tr>
-        <tbody id="corpoTabelaImoveis"></tbody>
-    </table>
+    <h2>Registro</h2>
+    <p id="mensagemRegistro" style="color: red;"></p>
+    <form id="formRegistro">
+        <input type="text" id="usernameRegistro" placeholder="Usuário" required>
+        <input type="password" id="passwordRegistro" placeholder="Senha" required>
+        <input type="submit" value="Registrar">
+    </form>
 
-    <script src="rest.js"></script>
     <script>
-        const tabelaImoveis = document.querySelector('#tabelaImoveis');
-        const corpoTabela = document.querySelector('#corpoTabelaImoveis');
-        const paragrafoMensagem = document.querySelector('#paragrafoMensagem');
+        const formLogin = document.getElementById('formLogin');
+        const formRegistro = document.getElementById('formRegistro');
+        const mensagemLogin = document.getElementById('mensagemLogin');
+        const mensagemRegistro = document.getElementById('mensagemRegistro');
 
-        inicializar();
-
-        function inicializar() {
-            paragrafoMensagem.textContent = 'Listagem de todos os imóveis';
-            tabelaImoveis.style.display = 'inline';
-            listarTodosImoveis();            
-        }
-
-        function listarTodosImoveis() {
-            const errorHandler = (error) => { 
-                paragrafoMensagem.textContent = "Erro ao listar imóveis (código " + error.message + ")";
-            };
-            asyncLerImoveis(preencherTabela, errorHandler);
-        }
-
-        function preencherTabela(imoveis) {
-            corpoTabela.innerHTML = "";
-            imoveis.forEach((imovel) => {
-                const linha = corpoTabela.insertRow();
-                const celulaId = linha.insertCell();
-                const celulaEndereco = linha.insertCell();
-                const celulaPreco = linha.insertCell();
-
-                celulaId.textContent = imovel.id;
-                celulaEndereco.textContent = imovel.endereco;
-                celulaPreco.textContent = imovel.preco;
+        // Verifica se o usuário já está logado ao carregar a página
+        window.onload = () => {
+            if (localStorage.getItem('usuarioLogado')) {
+                // Redireciona para a página de listagem de imóveis se já estiver logado
+                window.location.href = '/imoveis.html';
+            }
+        };
+    
+        formLogin.onsubmit = async (event) => {
+            event.preventDefault();
+            mensagemLogin.textContent = ''; // Limpa mensagem anterior
+            const username = document.getElementById('usernameLogin').value;
+            const password = document.getElementById('passwordLogin').value;
+    
+            const response = await fetch('/api/usuarios/login', { // Corrigido para /api/usuarios/login
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
             });
-        }
 
-        function asyncLerImoveis(proxSucesso, proxErro) {
-            const URL = '/api/imoveis';
-            fetch(URL)
-                .then(resposta => {
-                    if (!resposta.ok) throw new Error(resposta.status);
-                    return resposta.json();
-                })
-                .then(jsonResponse => proxSucesso(jsonResponse))
-                .catch(proxErro);
-        }
-    </script>
+            const message = await response.text();
+            mensagemLogin.textContent = message; // Mostra mensagem da resposta
+            if (response.ok) {
+                // Armazena o usuário logado no localStorage
+                localStorage.setItem('usuarioLogado', username);
+                // Redireciona para a página de listagem de imóveis após o login
+                window.location.href = '/imoveis.html';
+            }
+        };
+    
+        formRegistro.onsubmit = async (event) => {
+            event.preventDefault();
+            mensagemRegistro.textContent = ''; // Limpa mensagem anterior
+            const username = document.getElementById('usernameRegistro').value;
+            const password = document.getElementById('passwordRegistro').value;
+    
+            const response = await fetch('/api/usuarios', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+    
+            const message = await response.text();
+            mensagemRegistro.textContent = message; // Mostra mensagem da resposta
+
+            if (response.ok) {
+                // Limpa os campos após o registro
+                formRegistro.reset();
+            }
+        };
+    </script>    
 </body>
 </html>

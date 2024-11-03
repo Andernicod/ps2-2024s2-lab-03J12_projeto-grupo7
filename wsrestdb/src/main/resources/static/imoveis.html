@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <title>Lista de Imóveis</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
+</head>
+<body>
+    <h1>Lista de Imóveis</h1>
+    <button id="logout">Sair</button>
+    <div id="imoveisContainer">
+        <h2>Imóveis Disponíveis</h2>
+        <ul id="imoveisList"></ul>
+    </div>
+
+    <h2>Adicionar Novo Imóvel</h2>
+    <form id="formAdicionarImovel">
+        <input type="text" id="tituloImovel" placeholder="Título do Imóvel" required>
+        <input type="text" id="descricaoImovel" placeholder="Descrição" required>
+        <input type="number" id="precoImovel" placeholder="Preço" required>
+        <input type="submit" value="Adicionar Imóvel">
+    </form>
+
+    <script>
+        const imoveisList = document.getElementById('imoveisList');
+        const formAdicionarImovel = document.getElementById('formAdicionarImovel');
+        const logoutButton = document.getElementById('logout');
+
+        // Função para carregar os imóveis
+        async function carregarImoveis() {
+            const response = await fetch('/api/imoveis'); // Adapte a URL conforme sua API
+            const imoveis = await response.json();
+            imoveisList.innerHTML = ''; // Limpa a lista existente
+
+            imoveis.forEach(imovel => {
+                const li = document.createElement('li');
+                li.textContent = `${imovel.titulo} - ${imovel.descricao} - R$${imovel.preco}`;
+                imoveisList.appendChild(li);
+            });
+        }
+
+        // Carregar imóveis ao abrir a página
+        window.onload = () => {
+            carregarImoveis();
+
+            // Verifica se o usuário está logado
+            if (!localStorage.getItem('usuarioLogado')) {
+                window.location.href = 'index.html'; // Redireciona para a página de login
+            }
+        };
+
+        // Adiciona um novo imóvel
+        formAdicionarImovel.onsubmit = async (event) => {
+            event.preventDefault();
+            const titulo = document.getElementById('tituloImovel').value;
+            const descricao = document.getElementById('descricaoImovel').value;
+            const preco = document.getElementById('precoImovel').value;
+
+            const response = await fetch('/api/imoveis', { // Adapte a URL conforme sua API
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ titulo, descricao, preco }),
+            });
+
+            if (response.ok) {
+                carregarImoveis(); // Atualiza a lista de imóveis
+                formAdicionarImovel.reset(); // Limpa os campos do formulário
+            } else {
+                alert('Erro ao adicionar imóvel.');
+            }
+        };
+
+        // Logout
+        logoutButton.onclick = () => {
+            localStorage.removeItem('usuarioLogado'); // Remove usuário logado
+            window.location.href = 'index.html'; // Redireciona para a página de login
+        };
+    </script>
+</body>
+</html>

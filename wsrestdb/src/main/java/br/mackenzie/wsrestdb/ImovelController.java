@@ -1,34 +1,18 @@
 package br.mackenzie.wsrestdb;
 
-import java.util.*;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/imoveis") // Define o prefixo para as rotas deste controlador
 public class ImovelController {
-    @Autowired
-    private ImovelRepo imovelRepo;
 
-    public ImovelController() {
-    }  
-
-    @GetMapping("/api/imoveis")
-    public Iterable<Imovel> consultarTodosImoveis() {
-        return imovelRepo.findAll();
-    }
-
-    @GetMapping("/api/imoveis/{id}")
-    public Optional<Imovel> consultarImovel(@PathVariable long id) {
-        return imovelRepo.findById(id);
-    }
-
-    @PostMapping("/api/imoveis")
-    public Imovel adicionar(@RequestBody Imovel novoImovel) {
-        return imovelRepo.save(novoImovel);
+    @GetMapping
+    public String consultarTodosImoveis(HttpSession session) {
+        // Verifica se o usuário está logado
+        if (session.getAttribute("usuarioLogado") == null) {
+            return "Acesso negado. Você precisa estar logado para acessar esta página.";
+        }
+        return "Acesso permitido. Listagem de imóveis aqui."; // Aqui você poderia retornar a lista de imóveis.
     }
 }
