@@ -3,72 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Lista de Imóveis</title>
-    <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f9f9f9;
-        }
-        h1, h2 {
-            color: #333;
-        }
-        #logout {
-            background-color: #ff4d4d;
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-        }
-        #imoveisContainer {
-            margin-top: 20px;
-        }
-        .imovel {
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            margin-bottom: 15px;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-        }
-        .imovel img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 5px;
-            margin-right: 15px;
-        }
-        .imovel-details {
-            flex-grow: 1;
-        }
-        form {
-            margin-top: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="style_imoveis.css" type="text/css"> <!-- Linkando o CSS -->
 </head>
 <body>
-    <h1>Lista de Imóveis</h1>
-    <button id="logout">Sair</button>
-    
-    <div id="imoveisContainer">
-        <h2>Imóveis Disponíveis</h2>
-        <ul id="imoveisList"></ul>
-    </div>
+    <div class="container">
+        <h1>Lista de Imóveis</h1>
+        <button id="logout">Sair</button>
 
-    <h2>Adicionar Novo Imóvel</h2>
-    <form id="formAdicionarImovel">
-        <input type="text" id="tituloImovel" placeholder="Título do Imóvel" required>
-        <input type="text" id="descricaoImovel" placeholder="Descrição" required>
-        <input type="number" id="precoImovel" placeholder="Preço" required>
-        <input type="url" id="fotoImovel" placeholder="URL da Foto" required>
-        <select id="tipoImovel" required>
-            <option value="" disabled selected>Selecione o tipo de imóvel</option>
-            <option value="venda">Venda</option>
-            <option value="aluguel">Aluguel</option>
-        </select>
-        <input type="submit" value="Adicionar Imóvel">
-    </form>
+        <div class="user-info">
+            <h2 id="userName">Bem-vindo, Usuário!</h2>
+        </div>
+
+        <div class="search-container">
+            <input type="text" id="searchImovel" placeholder="Pesquisar por endereço" required>
+            <button id="searchButton">Buscar</button>
+        </div>
+
+        <h2>Adicionar Novo Imóvel</h2>
+        <form id="formAdicionarImovel">
+            <input type="text" id="tituloImovel" placeholder="Título do Imóvel" required>
+            <input type="text" id="descricaoImovel" placeholder="Descrição" required>
+            <input type="number" id="precoImovel" placeholder="Preço" required>
+            <input type="url" id="fotoImovel" placeholder="URL da Foto" required>
+            <select id="tipoImovel" required>
+                <option value="" disabled selected>Selecione o tipo de imóvel</option>
+                <option value="venda">Venda</option>
+                <option value="aluguel">Aluguel</option>
+            </select>
+            <input type="submit" value="Adicionar Imóvel">
+        </form>
+
+        <div id="imoveisContainer">
+            <h2>Imóveis Disponíveis</h2>
+            <ul id="imoveisList"></ul>
+        </div>
+    </div>
 
     <script src="rest.js"></script> <!-- Linkando o arquivo JavaScript -->
 </body>

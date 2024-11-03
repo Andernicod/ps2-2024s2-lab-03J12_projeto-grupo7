@@ -1,28 +1,34 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="pt-BR">
 <head>
     <title>Imóveis - Login e Registro</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
+    <link rel="stylesheet" href="style_login.css" type="text/css"> <!-- Linkando o CSS -->
 </head>
 <body>
-    <h1>Gerenciamento de Imóveis</h1>
-    
-    <h2>Login</h2>
-    <p id="mensagemLogin" style="color: red;"></p>
-    <form id="formLogin">
-        <input type="text" id="usernameLogin" placeholder="Usuário" required>
-        <input type="password" id="passwordLogin" placeholder="Senha" required>
-        <input type="submit" value="Login">
-    </form>
+    <div class="container">
+        <h1>Gerenciamento de Imóveis</h1>
+        
+        <div class="form-container">
+            <h2>Login</h2>
+            <p id="mensagemLogin" class="error-message"></p>
+            <form id="formLogin">
+                <input type="text" id="usernameLogin" placeholder="Usuário" required>
+                <input type="password" id="passwordLogin" placeholder="Senha" required>
+                <input type="submit" value="Login">
+            </form>
+        </div>
 
-    <h2>Registro</h2>
-    <p id="mensagemRegistro" style="color: red;"></p>
-    <form id="formRegistro">
-        <input type="text" id="usernameRegistro" placeholder="Usuário" required>
-        <input type="password" id="passwordRegistro" placeholder="Senha" required>
-        <input type="submit" value="Registrar">
-    </form>
+        <div class="form-container">
+            <h2>Registro</h2>
+            <p id="mensagemRegistro" class="error-message"></p>
+            <form id="formRegistro">
+                <input type="text" id="usernameRegistro" placeholder="Usuário" required>
+                <input type="password" id="passwordRegistro" placeholder="Senha" required>
+                <input type="submit" value="Registrar">
+            </form>
+        </div>
+    </div>
 
     <script src="rest.js"></script> <!-- Linkando o arquivo JavaScript -->
 </body>
