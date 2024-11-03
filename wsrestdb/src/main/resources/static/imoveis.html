@@ -1,13 +1,56 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <title>Lista de Imóveis</title>
     <meta charset="UTF-8">
+    <title>Lista de Imóveis</title>
     <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        #logout {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+        #imoveisContainer {
+            margin-top: 20px;
+        }
+        .imovel {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .imovel img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+        .imovel-details {
+            flex-grow: 1;
+        }
+        form {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <h1>Lista de Imóveis</h1>
     <button id="logout">Sair</button>
+    
     <div id="imoveisContainer">
         <h2>Imóveis Disponíveis</h2>
         <ul id="imoveisList"></ul>
@@ -18,6 +61,12 @@
         <input type="text" id="tituloImovel" placeholder="Título do Imóvel" required>
         <input type="text" id="descricaoImovel" placeholder="Descrição" required>
         <input type="number" id="precoImovel" placeholder="Preço" required>
+        <input type="url" id="fotoImovel" placeholder="URL da Foto" required>
+        <select id="tipoImovel" required>
+            <option value="" disabled selected>Selecione o tipo de imóvel</option>
+            <option value="venda">Venda</option>
+            <option value="aluguel">Aluguel</option>
+        </select>
         <input type="submit" value="Adicionar Imóvel">
     </form>
 
@@ -26,56 +75,66 @@
         const formAdicionarImovel = document.getElementById('formAdicionarImovel');
         const logoutButton = document.getElementById('logout');
 
-        // Função para carregar os imóveis
         async function carregarImoveis() {
-            const response = await fetch('/api/imoveis'); // Adapte a URL conforme sua API
+            const response = await fetch('/api/imoveis');
             const imoveis = await response.json();
-            imoveisList.innerHTML = ''; // Limpa a lista existente
 
-            imoveis.forEach(imovel => {
-                const li = document.createElement('li');
-                li.textContent = `${imovel.titulo} - ${imovel.descricao} - R$${imovel.preco}`;
-                imoveisList.appendChild(li);
-            });
+            if (Array.isArray(imoveis)) {
+                imoveisList.innerHTML = ''; // Limpa a lista existente
+                imoveis.forEach(imovel => {
+                    const li = document.createElement('li');
+                    li.classList.add('imovel');
+                    li.innerHTML = `
+                        <img src="${imovel.foto}" alt="${imovel.titulo}">
+                        <div class="imovel-details">
+                            <strong>${imovel.titulo}</strong><br>
+                            <span>${imovel.descricao}</span><br>
+                            <span>R$ ${imovel.preco}</span><br>
+                            <span><em>${imovel.tipo === 'venda' ? 'Para Venda' : 'Para Aluguel'}</em></span>
+                        </div>
+                    `;
+                    imoveisList.appendChild(li);
+                });
+            } else {
+                console.error('Erro: A resposta não é uma lista de imóveis.');
+            }
         }
 
-        // Carregar imóveis ao abrir a página
         window.onload = () => {
             carregarImoveis();
-
-            // Verifica se o usuário está logado
             if (!localStorage.getItem('usuarioLogado')) {
-                window.location.href = 'index.html'; // Redireciona para a página de login
+                window.location.href = 'index.html';
             }
         };
 
-        // Adiciona um novo imóvel
         formAdicionarImovel.onsubmit = async (event) => {
             event.preventDefault();
             const titulo = document.getElementById('tituloImovel').value;
             const descricao = document.getElementById('descricaoImovel').value;
             const preco = document.getElementById('precoImovel').value;
+            const foto = document.getElementById('fotoImovel').value;
+            const tipo = document.getElementById('tipoImovel').value;
 
-            const response = await fetch('/api/imoveis', { // Adapte a URL conforme sua API
+            const response = await fetch('/api/imoveis', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ titulo, descricao, preco }),
+                body: JSON.stringify({ titulo, descricao, preco, foto, tipo }),
             });
 
             if (response.ok) {
-                carregarImoveis(); // Atualiza a lista de imóveis
-                formAdicionarImovel.reset(); // Limpa os campos do formulário
+                carregarImoveis();
+                formAdicionarImovel.reset();
             } else {
-                alert('Erro ao adicionar imóvel.');
+                const errorText = await response.text();
+                alert('Erro ao adicionar imóvel: ' + errorText);
             }
         };
 
-        // Logout
         logoutButton.onclick = () => {
-            localStorage.removeItem('usuarioLogado'); // Remove usuário logado
-            window.location.href = 'index.html'; // Redireciona para a página de login
+            localStorage.removeItem('usuarioLogado');
+            window.location.href = 'index.html';
         };
     </script>
 </body>
