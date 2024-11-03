@@ -24,66 +24,6 @@
         <input type="submit" value="Registrar">
     </form>
 
-    <script>
-        const formLogin = document.getElementById('formLogin');
-        const formRegistro = document.getElementById('formRegistro');
-        const mensagemLogin = document.getElementById('mensagemLogin');
-        const mensagemRegistro = document.getElementById('mensagemRegistro');
-
-        // Verifica se o usuário já está logado ao carregar a página
-        window.onload = () => {
-            if (localStorage.getItem('usuarioLogado')) {
-                // Redireciona para a página de listagem de imóveis se já estiver logado
-                window.location.href = '/imoveis.html';
-            }
-        };
-    
-        formLogin.onsubmit = async (event) => {
-            event.preventDefault();
-            mensagemLogin.textContent = ''; // Limpa mensagem anterior
-            const username = document.getElementById('usernameLogin').value;
-            const password = document.getElementById('passwordLogin').value;
-    
-            const response = await fetch('/api/usuarios/login', { // Corrigido para /api/usuarios/login
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password }),
-            });
-
-            const message = await response.text();
-            mensagemLogin.textContent = message; // Mostra mensagem da resposta
-            if (response.ok) {
-                // Armazena o usuário logado no localStorage
-                localStorage.setItem('usuarioLogado', username);
-                // Redireciona para a página de listagem de imóveis após o login
-                window.location.href = '/imoveis.html';
-            }
-        };
-    
-        formRegistro.onsubmit = async (event) => {
-            event.preventDefault();
-            mensagemRegistro.textContent = ''; // Limpa mensagem anterior
-            const username = document.getElementById('usernameRegistro').value;
-            const password = document.getElementById('passwordRegistro').value;
-    
-            const response = await fetch('/api/usuarios', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password }),
-            });
-    
-            const message = await response.text();
-            mensagemRegistro.textContent = message; // Mostra mensagem da resposta
-
-            if (response.ok) {
-                // Limpa os campos após o registro
-                formRegistro.reset();
-            }
-        };
-    </script>    
+    <script src="rest.js"></script> <!-- Linkando o arquivo JavaScript -->
 </body>
 </html>
