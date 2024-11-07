@@ -6,15 +6,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/usuarios") // Prefixo para as rotas deste controlador
+@RequestMapping("/api/usuarios")
 public class UsuarioController {
-
     @Autowired
     private UsuarioRepo usuarioRepo;
 
-    @PostMapping // /api/usuarios
+    @PostMapping
     public ResponseEntity<String> registrar(@RequestBody Usuario novoUsuario) {
-        // Verifica se o nome de usuário já existe
         if (usuarioRepo.findByUsername(novoUsuario.getUsername()) != null) {
             return ResponseEntity.badRequest().body("Usuário já existe. Tente outro nome de usuário.");
         }
@@ -23,9 +21,8 @@ public class UsuarioController {
         return ResponseEntity.ok("Usuário registrado com sucesso!");
     }
 
-    @PostMapping("/login") // /api/usuarios/login
+    @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody Usuario usuario, HttpSession session) {
-        // Verifica se o nome de usuário ou senha está vazio
         if (usuario.getUsername() == null || usuario.getUsername().isEmpty()) {
             return ResponseEntity.badRequest().body("Nome de usuário não pode estar vazio.");
         }
@@ -49,7 +46,7 @@ public class UsuarioController {
         return ResponseEntity.ok("Bem-vindo, " + foundUser.getUsername() + "!");
     }
 
-    @GetMapping("/bemvindo") // /api/usuarios/bemvindo
+    @GetMapping("/bemvindo")
     public ResponseEntity<String> bemVindo(HttpSession session) {
         String usuarioLogado = (String) session.getAttribute("usuarioLogado");
         if (usuarioLogado != null) {
