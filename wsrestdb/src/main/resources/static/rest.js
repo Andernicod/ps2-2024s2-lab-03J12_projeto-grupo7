@@ -102,37 +102,53 @@ async function editarImovel(id) {
     try {
         const response = await fetch(`/api/imoveis/${id}`);
         const imovel = await response.json();
-
+        
         if (imovel) {
-            preencherFormulario(imovel);
-
+            document.getElementById('tituloImovelEdit').value = imovel.titulo;
+            document.getElementById('descricaoImovelEdit').value = imovel.descricao;
+            document.getElementById('precoImovelEdit').value = imovel.preco;
+            document.getElementById('fotoImovelEdit').value = imovel.foto;
+            document.getElementById('tipoImovelEdit').value = imovel.tipo;
+            document.getElementById('ruaImovelEdit').value = imovel.rua;
+            document.getElementById('numeroImovelEdit').value = imovel.numero;
+            document.getElementById('cidadeImovelEdit').value = imovel.cidade;
+            document.getElementById('estadoImovelEdit').value = imovel.estado;
+            document.getElementById('cepImovelEdit').value = imovel.cep;
+            
             editModal.style.display = 'block';
 
             formEditarImovel.onsubmit = async (event) => {
                 event.preventDefault();
-
-                const imovelData = obterDadosImovel();
-
+                const imovelData = obterDadosImovelEdit();
                 const responseUpdate = await fetch(`/api/imoveis/${id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(imovelData),
                 });
-
                 if (responseUpdate.ok) {
                     carregarImoveis();
-
                     editModal.style.display = 'none';
                 } else {
-                    alert('Erro ao editar imóvel');
+                    const errorText = await responseUpdate.text();
+                    console.error('Erro ao editar imóvel:', errorText);
                 }
             };
-        } else {
-            alert('Erro ao carregar imóvel para edição');
         }
     } catch (error) {
-        console.error('Erro ao editar imóvel:', error);
-        alert('Erro ao carregar imóvel para edição');
+        console.error('Erro ao buscar imóvel para edição:', error);
+        alert('Erro ao buscar imóvel.');
+    }
+}
+
+async function buscarImoveis() {
+    const termo = document.getElementById('campoBusca').value;
+    const response = await fetch(`/api/imoveis/buscar?termo=${encodeURIComponent(termo)}`);
+    const imoveis = await response.json();
+
+    if (imoveis) {
+        exibirImoveis(imoveis); // função para renderizar os imóveis na página
+    } else {
+        alert("Nenhum imóvel encontrado.");
     }
 }
 
@@ -227,6 +243,21 @@ function obterDadosImovel() {
         cidade: document.getElementById('cidadeImovel').value,
         estado: document.getElementById('estadoImovel').value,
         cep: document.getElementById('cepImovel').value
+    };
+}
+
+function obterDadosImovelEdit() {
+    return {
+        titulo: document.getElementById('tituloImovelEdit').value,
+        descricao: document.getElementById('descricaoImovelEdit').value,
+        preco: document.getElementById('precoImovelEdit').value,
+        foto: document.getElementById('fotoImovelEdit').value,
+        tipo: document.getElementById('tipoImovelEdit').value,
+        rua: document.getElementById('ruaImovelEdit').value,
+        numero: document.getElementById('numeroImovelEdit').value,
+        cidade: document.getElementById('cidadeImovelEdit').value,
+        estado: document.getElementById('estadoImovelEdit').value,
+        cep: document.getElementById('cepImovelEdit').value
     };
 }
 

@@ -13,11 +13,6 @@ public class Usuario {
 
     public Usuario() {}
 
-    public Usuario(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
     public long getId() { return id; }
     public String getUsername() { return username; }
     public String getPassword() { return password; }

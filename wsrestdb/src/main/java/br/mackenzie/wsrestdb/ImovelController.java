@@ -1,7 +1,6 @@
 package br.mackenzie.wsrestdb;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -15,27 +14,16 @@ public class ImovelController {
 
     @PostMapping
     public ResponseEntity<String> adicionarImovel(@RequestBody Imovel imovel) {
-        try {
-            imovelRepository.save(imovel);
-            return ResponseEntity.ok("Imóvel adicionado com sucesso!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Erro ao adicionar imóvel: " + e.getMessage());
-        }
+        imovelRepository.save(imovel);
+        return ResponseEntity.ok("Imóvel adicionado com sucesso!");
     }
 
     @GetMapping
     public ResponseEntity<List<Imovel>> consultarTodosImoveis(@RequestParam(required = false) String search) {
-        try {
-            List<Imovel> imoveis = search != null && !search.isEmpty() 
-                ? imovelRepository.findByRuaContainingIgnoreCase(search)
-                : (List<Imovel>) imovelRepository.findAll();
-            return ResponseEntity.ok(imoveis);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+        List<Imovel> imoveis = (search != null && !search.isEmpty()) 
+            ? imovelRepository.findByRuaContainingIgnoreCase(search) 
+            : (List<Imovel>) imovelRepository.findAll();
+        return ResponseEntity.ok(imoveis);
     }
 
     @GetMapping("/{id}")
