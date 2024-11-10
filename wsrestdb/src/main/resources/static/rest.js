@@ -146,7 +146,7 @@ async function buscarImoveis() {
     const imoveis = await response.json();
 
     if (imoveis) {
-        exibirImoveis(imoveis); // função para renderizar os imóveis na página
+        exibirImoveis(imoveis);
     } else {
         alert("Nenhum imóvel encontrado.");
     }
@@ -219,7 +219,7 @@ if (formRegistro) {
             });
 
             const message = await response.text();
-            mensagemRegistro.textContent = message; // Mostra mensagem da resposta
+            mensagemRegistro.textContent = message;
 
             if (response.ok) {
                 formRegistro.reset();

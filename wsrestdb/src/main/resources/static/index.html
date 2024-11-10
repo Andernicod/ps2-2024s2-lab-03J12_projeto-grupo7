@@ -1,35 +1,47 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <title>Imóveis - Login e Registro</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style_login.css" type="text/css"> <!-- Linkando o CSS -->
+    <link rel="stylesheet" href="style_login.css" type="text/css">
 </head>
 <body>
-    <div class="container">
-        <h1>Gerenciamento de Imóveis</h1>
-        
-        <div class="form-container">
-            <h2>Login</h2>
-            <p id="mensagemLogin" class="error-message"></p>
-            <form id="formLogin">
-                <input type="text" id="usernameLogin" placeholder="Usuário" required>
-                <input type="password" id="passwordLogin" placeholder="Senha" required>
-                <input type="submit" value="Login">
-            </form>
-        </div>
+    <div class="background">
+        <div class="container">
+            <h1>Gerenciamento de Imóveis</h1>
+            
+            <div class="form-container login-container">
+                <h2>Login</h2>
+                <p id="mensagemLogin" class="error-message"></p>
+                <form id="formLogin">
+                    <input type="text" id="usernameLogin" placeholder="Usuário" required>
+                    <input type="password" id="passwordLogin" placeholder="Senha" required>
+                    <input type="submit" value="Login">
+                </form>
+                <p class="toggle-link" onclick="toggleForms()">Não sou cadastrado? Clique aqui</p>
+            </div>
 
-        <div class="form-container">
-            <h2>Registro</h2>
-            <p id="mensagemRegistro" class="error-message"></p>
-            <form id="formRegistro">
-                <input type="text" id="usernameRegistro" placeholder="Usuário" required>
-                <input type="password" id="passwordRegistro" placeholder="Senha" required>
-                <input type="submit" value="Registrar">
-            </form>
+            <div class="form-container register-container hidden">
+                <h2>Registro</h2>
+                <p id="mensagemRegistro" class="error-message"></p>
+                <form id="formRegistro">
+                    <input type="text" id="usernameRegistro" placeholder="Usuário" required>
+                    <input type="password" id="passwordRegistro" placeholder="Senha" required>
+                    <input type="submit" value="Registrar">
+                </form>
+                <p class="toggle-link" onclick="toggleForms()">Já sou cadastrado? Clique aqui</p>
+            </div>
         </div>
     </div>
 
     <script src="rest.js"></script>
+    <script>
+        function toggleForms() {
+            const loginForm = document.querySelector('.login-container');
+            const registerForm = document.querySelector('.register-container');
+            loginForm.classList.toggle('hidden');
+            registerForm.classList.toggle('hidden');
+        }
+    </script>
 </body>
 </html>

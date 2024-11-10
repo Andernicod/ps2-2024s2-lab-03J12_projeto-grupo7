@@ -9,5 +9,4 @@ public interface ImovelRepo extends CrudRepository<Imovel, Long> {
     List<Imovel> findByRuaContainingIgnoreCase(String rua);
     List<Imovel> findByTipo(String tipo);
     List<Imovel> findByPrecoLessThan(double preco);
-
 }

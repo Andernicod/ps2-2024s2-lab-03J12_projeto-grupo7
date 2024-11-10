@@ -14,13 +14,13 @@
         <button id="logout">Sair</button>
 
         <div class="search-container">
-            <input type="text" id="searchImovel" placeholder="Pesquisar por endereço" required>
+            <input type="text" id="searchImovel" placeholder="Pesquisar por título ou endereço" required>
             <button id="searchButton">Buscar</button>
         </div>
 
         <h2>Adicionar Novo Imóvel</h2>
         <button id="showAddForm">Adicionar Imóvel</button>
-        <form id="formAdicionarImovel" style="display: none;">
+        <form id="formAdicionarImovel" class="form" style="display: none;">
             <input type="text" id="tituloImovel" placeholder="Título do Imóvel" required>
             <input type="text" id="descricaoImovel" placeholder="Descrição" required>
             <input type="number" id="precoImovel" placeholder="Preço" required>
@@ -43,8 +43,7 @@
             <h2>Imóveis Disponíveis</h2>
             <ul id="imoveisList"></ul>
         </div>
-
-        <!-- Pop-up de Edição -->
+        
         <div id="editModal" class="modal" style="display: none;">
             <div class="modal-content">
                 <span class="close" id="closeModal">&times;</span>

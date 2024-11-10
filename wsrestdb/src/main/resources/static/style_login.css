@@ -6,34 +6,42 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    background-color: #f4f4f4;
+    margin: 0;
+}
+
+.background {
+    background: url('https://via.placeholder.com/1600x900') no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    width: 90%;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
     max-width: 400px;
+    text-align: center;
 }
 
 h1 {
-    text-align: center;
+    font-size: 2em;
     margin-bottom: 20px;
-}
-
-.form-container {
-    margin-bottom: 20px;
+    color: #333;
 }
 
 h2 {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     font-size: 1.5em;
     color: #333;
 }
@@ -42,8 +50,8 @@ input[type="text"],
 input[type="password"],
 input[type="submit"] {
     width: 100%;
-    padding: 10px;
-    margin: 5px 0;
+    padding: 12px;
+    margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1em;
@@ -54,6 +62,7 @@ input[type="submit"] {
     color: white;
     border: none;
     cursor: pointer;
+    font-weight: bold;
 }
 
 input[type="submit"]:hover {
@@ -63,4 +72,33 @@ input[type="submit"]:hover {
 .error-message {
     color: red;
     margin-bottom: 10px;
+}
+
+.toggle-link {
+    color: #007bff;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.toggle-link:hover {
+    text-decoration: underline;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.login-container.hidden,
+.register-container.hidden {
+    display: none;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+        max-width: 300px;
+    }
 }
