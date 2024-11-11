@@ -179,7 +179,6 @@ async function excluirImovel(id) {
 if (logoutButton) {
     logoutButton.onclick = () => {
         localStorage.removeItem('usuarioLogado');
-        sessionStorage.clear();
         window.location.href = 'index.html';
     };
 }
