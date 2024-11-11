@@ -8,7 +8,7 @@ const mensagemRegistro = document.getElementById('mensagemRegistro');
 const searchButton = document.getElementById('searchButton');
 const searchInput = document.getElementById('searchImovel');
 const formEditarImovel = document.getElementById('formEditarImovel');
-const editModal = document.getElementById('editModal'); // Modal de edição
+const editModal = document.getElementById('editModal');
 
 async function carregarImoveis(query = '') {
     try {
@@ -69,6 +69,7 @@ if (formAdicionarImovel) {
     formAdicionarImovel.onsubmit = async (event) => {
         event.preventDefault();
         const imovelData = obterDadosImovel();
+        
         try {
             const response = await fetch('/api/imoveis', {
                 method: 'POST',

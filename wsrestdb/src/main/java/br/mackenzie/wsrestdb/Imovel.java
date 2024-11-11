@@ -9,8 +9,9 @@ import jakarta.persistence.JoinColumn;
 
 @Entity
 public class Imovel {
-    @Id @GeneratedValue
-    private long id;
+    @Id 
+    @GeneratedValue
+    private Long id;
     private String titulo;
 
     @Lob
@@ -28,12 +29,12 @@ public class Imovel {
     private String cep;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")  // A chave estrangeira será "usuario_id"
-    private Usuario usuario;  // Proprietário do imóvel
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     public Imovel() {}
 
-    public long getId() { return id; }
+    public Long getId() { return id; }
     public String getTitulo() { return titulo; }
     public String getDescricao() { return descricao; }
     public double getPreco() { return preco; }
@@ -46,7 +47,8 @@ public class Imovel {
     public String getCep() { return cep; }
     public Usuario getUsuario() { return usuario; }
 
-    public void setId(long id) { this.id = id; }
+    // Setters
+    public void setId(Long id) { this.id = id; }
     public void setTitulo(String titulo) { this.titulo = titulo; }
     public void setDescricao(String descricao) { this.descricao = descricao; }
     public void setPreco(double preco) { this.preco = preco; }
