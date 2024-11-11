@@ -112,6 +112,40 @@ button:hover {
     flex-grow: 1;
 }
 
+#botoes-ED {
+    display: flex;
+    gap: 10px;
+}
+
+#botoes-ED button {
+    padding: 8px 16px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: white;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#botoes-ED button:hover {
+    transform: scale(1.05);
+}
+
+#botoes-ED button.edit {
+    background-color: #17a2b8;
+}
+
+#botoes-ED button.edit:hover {
+    background-color: #138496;
+}
+
+#botoes-ED button.delete {
+    background-color: #dc3545;
+}
+
+#botoes-ED button.delete:hover {
+    background-color: #c82333;
+}
+
 form {
     margin-top: 20px;
     display: flex;
@@ -235,4 +269,37 @@ form input[type="submit"]:hover {
     .close {
         font-size: 24px;
     }
+}
+
+.error-popup {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f8d7da;
+    color: red;
+    padding: 15px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    z-index: 1000;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.error-popup strong {
+    font-weight: bold;
+}
+
+.close-error {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.close-error:hover {
+    color: darkred;
 }

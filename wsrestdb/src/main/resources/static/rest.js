@@ -34,8 +34,10 @@ async function carregarImoveis(query = '') {
                         <span><em>${imovel.tipo === 'venda' ? 'Para Venda' : 'Para Aluguel'}</em></span><br>
                         <span>${imovel.rua}, ${imovel.numero} - ${imovel.cidade}, ${imovel.estado} - CEP: ${imovel.cep}</span>
                     </div>
-                    <button onclick="editarImovel(${imovel.id})">Editar</button>
-                    <button onclick="excluirImovel(${imovel.id})">Excluir</button>
+                    <div id="botoes-ED">
+                        <button class="edit" onclick="editarImovel(${imovel.id})">Editar</button>
+                        <button class="delete" onclick="excluirImovel(${imovel.id})">Excluir</button>
+                    </div>
                 `;
                 imoveisList.appendChild(li);
             });
@@ -83,11 +85,11 @@ if (formAdicionarImovel) {
                 formAdicionarImovel.style.display = 'none';
             } else {
                 const errorText = await response.text();
-                alert('Erro ao adicionar imóvel: ' + errorText);
+                exibirMensagemDeErro('Erro ao adicionar imóvel: ' + errorText); // Exibir erro na tela
             }
         } catch (error) {
             console.error('Erro ao adicionar imóvel:', error);
-            alert('Erro ao adicionar imóvel: ' + error.message);
+            exibirMensagemDeErro('Erro ao adicionar imóvel: ' + error.message); // Exibir erro na tela
         }
     };
 }
@@ -126,18 +128,20 @@ async function editarImovel(id) {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(imovelData),
                 });
+
                 if (responseUpdate.ok) {
                     carregarImoveis();
                     editModal.style.display = 'none';
                 } else {
                     const errorText = await responseUpdate.text();
                     console.error('Erro ao editar imóvel:', errorText);
+                    exibirMensagemDeErro(errorText); // Exibir erro na tela
                 }
             };
         }
     } catch (error) {
         console.error('Erro ao buscar imóvel para edição:', error);
-        alert('Erro ao buscar imóvel.');
+        exibirMensagemDeErro('Erro ao buscar imóvel para edição.');
     }
 }
 
@@ -162,11 +166,12 @@ async function excluirImovel(id) {
             if (response.ok) {
                 carregarImoveis();
             } else {
-                alert('Erro ao excluir imóvel');
+                const errorText = await response.text();
+                exibirMensagemDeErro(errorText); // Exibir erro na tela
             }
         } catch (error) {
             console.error('Erro ao excluir imóvel:', error);
-            alert('Erro ao excluir imóvel');
+            exibirMensagemDeErro('Erro ao excluir imóvel.');
         }
     }
 }
@@ -174,6 +179,7 @@ async function excluirImovel(id) {
 if (logoutButton) {
     logoutButton.onclick = () => {
         localStorage.removeItem('usuarioLogado');
+        sessionStorage.clear();
         window.location.href = 'index.html';
     };
 }
@@ -281,4 +287,18 @@ if (editModal) {
             editModal.style.display = 'none';
         }
     };
+}
+
+function exibirMensagemDeErro(mensagem) {
+    const errorMessageDiv = document.getElementById('error-message');
+    const errorTextSpan = document.getElementById('error-text');
+    const closeErrorBtn = document.getElementById('close-error');
+    errorTextSpan.textContent = mensagem;
+    errorMessageDiv.style.display = 'block';
+    closeErrorBtn.onclick = () => {
+        errorMessageDiv.style.display = 'none';
+    };
+    setTimeout(() => {
+        errorMessageDiv.style.display = 'none';
+    }, 5000);
 }
