@@ -214,6 +214,10 @@ if (formRegistro) {
     formRegistro.onsubmit = async (event) => {
         event.preventDefault();
         mensagemRegistro.textContent = '';
+
+        const nome = document.getElementById('nomeRegistro').value;
+        const sobrenome = document.getElementById('sobrenomeRegistro').value;
+        const email = document.getElementById('emailRegistro').value;
         const username = document.getElementById('usernameRegistro').value;
         const password = document.getElementById('passwordRegistro').value;
 
@@ -221,7 +225,7 @@ if (formRegistro) {
             const response = await fetch('/api/usuarios', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({ nome, sobrenome, email, username, password }),  // Incluindo os novos campos
             });
 
             const message = await response.text();

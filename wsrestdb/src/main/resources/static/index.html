@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <title>Imóveis - Login e Registro</title>
+    <title>Imóveis - Login</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style_login.css" type="text/css">
+    <link rel="icon" href="https://cdn-icons-png.freepik.com/256/4056/4056445.png?semt=ais_hybrid" type="image/png">
 </head>
 <body>
     <div class="background">
@@ -25,6 +26,9 @@
                 <h2>Registro</h2>
                 <p id="mensagemRegistro" class="error-message"></p>
                 <form id="formRegistro">
+                    <input type="text" id="nomeRegistro" placeholder="Nome" required>
+                    <input type="text" id="sobrenomeRegistro" placeholder="Sobrenome" required>
+                    <input type="email" id="emailRegistro" placeholder="E-mail" required>
                     <input type="text" id="usernameRegistro" placeholder="Usuário" required>
                     <input type="password" id="passwordRegistro" placeholder="Senha" required>
                     <input type="submit" value="Registrar">
