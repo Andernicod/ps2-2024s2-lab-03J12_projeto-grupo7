@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Index</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
+    </head>
+<body>
+  <h1>Bem-vindo ao Gerenciamento de Imoveis!</h1>
+  <p>Aguarde enquanto verificamos se você já pode acessar os dados dos imóveis!</p>
+  <script>
+    var token = localStorage.getItem('token');
+    var url = "/hello";
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.setRequestHeader("Authorization", "Bearer " + token);
+    xhr.addEventListener('load', function() {
+        if (this.status === 200) {
+            if (this.responseText === 'hi') {
+                window.location.replace("/html/imoveis.html");
+            } else {
+                window.location.replace("/html/imoveis.html");
+            }
+        } else {
+            console.error("Erro na requisição:", this.status, this.statusText);
+            window.location.replace("/html/imoveis.html");
+        }
+    });
+    xhr.addEventListener('error', function() {
+        console.error("Erro de rede ao tentar se comunicar com o servidor.");
+        window.location.replace("/html/imoveis.html");
+    });
+    xhr.send(null);
+  </script>
+</body>
+</html>

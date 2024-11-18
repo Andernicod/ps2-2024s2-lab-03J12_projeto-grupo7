@@ -1,0 +1,585 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: url('https://images.pexels.com/photos/97906/pexels-photo-97906.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 900px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #333;
+    text-align: center;
+}
+
+button {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px auto;
+    display: block;
+}
+
+button:hover {
+    background-color: #4cae4c;
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    width: 100%;
+}
+
+#searchImovel {
+    padding: 12px 20px;
+    border: 2px solid #ccc;
+    border-radius: 30px;
+    flex-grow: 1;
+    margin-right: 15px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+    color: #333;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: 44px;
+}
+
+#searchImovel:focus {
+    border-color: #007bff;
+    background-color: #fff;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+#searchImovel::placeholder {
+    color: #888;
+    font-style: italic;
+}
+
+#searchButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+#searchButton:hover {
+    background-color: #0056b3;
+}
+
+.logout {
+    background-color: #dc3545;
+    width: 100px;
+}
+
+.logout:hover {
+    background-color: #c82333;
+}
+
+#cancelAdd {
+    background-color: #dc3545;
+    width: 100px;
+}
+
+#cancelAdd:hover {
+    background-color: #c82333;
+}
+
+#imoveisContainer {
+    margin-top: 20px;
+}
+
+#imoveisList {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.imovel {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.imovel:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.imovel img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.imovel-details {
+    flex-grow: 1;
+}
+
+#botoes-ED {
+    display: flex;
+    gap: 10px;
+}
+
+#botoes-ED button {
+    padding: 8px 16px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: white;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#botoes-ED button:hover {
+    transform: scale(1.05);
+}
+
+#botoes-ED button.edit {
+    background-color: #17a2b8;
+}
+
+#botoes-ED button.edit:hover {
+    background-color: #138496;
+}
+
+#botoes-ED button.delete {
+    background-color: #dc3545;
+}
+
+#botoes-ED button.delete:hover {
+    background-color: #c82333;
+}
+
+form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+form input, form select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+form input[type="submit"] {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+form input[type="submit"]:hover {
+    background-color: #4cae4c;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .imovel {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    #searchImovel {
+        padding: 8px;
+    }
+
+    #searchButton {
+        padding: 8px 15px;
+    }
+
+    form input, form select {
+        font-size: 0.9rem;
+    }
+
+    form input[type="submit"] {
+        font-size: 1rem;
+    }
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 10px;
+    width: 500px;
+    max-width: 90%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transform: scale(0.9);
+    animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+}
+
+#formEditarImovel input[type="submit"] {
+    background-color: #007bff;
+    font-size: 1.1rem;
+}
+
+#formEditarImovel input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .close {
+        font-size: 24px;
+    }
+}
+
+.error-popup {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f8d7da;
+    color: red;
+    padding: 15px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    z-index: 1000;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.error-popup strong {
+    font-weight: bold;
+}
+
+.close-error {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.close-error:hover {
+    color: darkred;
+}
+
+.pop-up-login {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+    overflow: hidden;
+}
+
+.pop-up-content {
+    background: #fff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transform: scale(0.9);
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    opacity: 0;
+    position: relative;
+}
+
+.pop-up-login.open .pop-up-content {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.pop-up-content p {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.pop-up-content button {
+    width: 100%;
+    padding: 12px 0;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.pop-up-content button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.pop-up-content button:active {
+    transform: translateY(2px);
+}
+
+.pop-up-content .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ddd;
+    color: #333;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    border: none;
+}
+
+.pop-up-content .close-btn:hover {
+    background-color: #ff5c5c;
+    color: white;
+}
+
+.pop-up-content .close-btn:active {
+    transform: scale(0.95);
+}
+
+.popup-email {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    animation: fadeIn 0.4s forwards;
+}
+
+.popup-content {
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+    width: 350px;
+    max-width: 90%;
+    position: relative;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    transform: scale(0.95);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.popup-email.open .popup-content {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.popup-email .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ddd;
+    color: #333;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    border: none;
+    padding: 0;
+}
+
+.popup-email .close-btn:hover {
+    background-color: #ff5c5c;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.popup-email .close-btn:active {
+    background-color: #e02e2e;
+    transform: scale(0.95);
+}
+
+.copy-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.copy-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.copy-btn:active {
+    background-color: #004494;
+    transform: translateY(2px);
+}
+
+.mensagem-sucesso {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #28a745;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    opacity: 0;
+    animation: slideIn 0.5s forwards;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        top: -60px;
+    }
+    to {
+        opacity: 1;
+        top: 20px;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.quero-esse-btn {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.quero-esse-btn:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+.quero-esse-btn:active {
+    background-color: #387d3c;
+    transform: translateY(2px);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
